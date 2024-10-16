@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>VistaDream</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="1711">
+    <meta property="og:image:height" content="576">
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="VistaDream" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="VistaDream" />
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.css">
+    <link rel="stylesheet" href="css/app.css">
+	<link rel="stylesheet" href="css/fontawesome.all.min.css">
+	<link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+
+	<!-- Google tag (gtag.js) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.8.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.3/clipboard.min.js"></script>
+    <script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+	<script defer src="js/fontawesome.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+    <script src="js/app.js"></script>
+    <script src="js/synced_video_selector.js"></script>
+
+</head>
+
+<body style="padding: 0%; width: 100%">
+    <div class="desktop-content">
+    <div class="video-background" style="margin-bottom: 0px; padding-bottom: 0px;">
+        <div class="video-overlay"></div>
+        <div class="flex-center-container"> <!-- New container for flexbox centering -->
+            <div class="content">
+                <!-- Your content here -->
+                <h1 style="font-size: 48px;"><b>Demo Scenes Reconstructed from a Single-view Image using VistaDream</b></h1>    
+                <div class="row justify-content-center">
+                    <div class="col-12 h3">
+                        <a href="./index.html" class="btn btn-outline-light" role="button" style="font-size: 20px;">Main Page</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <div class="row py-5 mt-5 bg-dark">
+            <div class="col-2"></div>
+            <div class="col-md-8">
+                <h1 class="text-center pb-2 text-white">
+                <p class="text-justify" style="font-size: 24px;">* Note 1: Here, we present only the **heavily downsampled point clouds** for efficient display and interaction. <br>
+                    It might take a while to load the scene.</p>
+                <!-- <p class="text-justify" style="font-size: 20px;">We recommend that readers refer to the high-quality rendering videos on the main page or 
+                    utilize the open-source code for scene reconstruction and visualization based on Gaussian Splatting.</p> -->
+                <p class="text-justify" style="font-size: 22px; color:rgb(255, 157, 0)"> * Note 2: Mouse: ''Drag with left click'' to rotate view || ''Scroll''' to zoom in/out || ''Drag with right click'' to move view<br>
+                    Keyboard: ''W'' - Move forward || ''S'' - Move backward || ''A'' - Move left || ''D'' - Move right</p>
+                <p class="text-justify" style="font-size: 22px; "> * Note 3: 
+                    Check / Uncheck the ''Remove Input View'' below will Gray-Out / Retain the area of input view.</p>
+                </h1>
+                
+                <div class="content text-center">
+                    <br>
+
+                    <script>
+                        activeScenePill = document.querySelector('.scene-pill.active-pill');
+                    </script>
+
+                    <div>
+                        <input type="checkbox" id="input_show" checked onchange="updateiframe()"/>
+                        <label for="input_show" style="font-size: 26px;">&nbsp;Remove Input View</label>
+                    </div>
+
+                    <div class="iframe-container">
+                        <iframe class="iframe show" src='https://hpwang-pages.github.io/build/?playbackPath=https://hpwang-pages.github.io/recordings/bathroom1_wo_input.viser' 
+                                                    id="viser_demo" frameborder='0' width='100%' height='960'></iframe>
+                    </div>
+                    <br>
+                    <div class="pill-row scene-pills" id="scene-pills">
+                        <span class="pill scene-pill active" data-value="bathroom" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/bathroom.png" alt="bathroom" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="lavender" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/lavender.png" alt="lavender" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="kitchen" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/kitchen.png" alt="kitchen" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="fall" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/fall.png" alt="fall" width="103">
+                        </span>
+                        <span class="pill scene-pill" data-value="kitchen1" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/kitchen1.png" alt="kitchen1" width="96">
+                        </span>
+                        <span class="pill scene-pill" data-value="seaside" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/seaside.png" alt="seaside" width="96">
+                        </span>
+                        <span class="pill scene-pill" data-value="barn" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/barn.png" alt="barn" width="127">
+                        </span>
+                        <span class="pill scene-pill" data-value="sd_bedroom" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/sd_bedroom.png" alt="sd_bedroom" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="sd_livingroom" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/sd_livingroom.png" alt="sd_livingroom" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="sd_readingroom" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/sd_readingroom.png" alt="sd_readingroom" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="sd_garden" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/sd_garden.png" alt="sd_garden" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="anstronaut" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/anstronaut.png" alt="anstronaut" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="living_room" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/living_room.png" alt="living_room" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="victorian" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/victorian.png" alt="victorian" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="steampunk" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/steampunk.png" alt="steampunk" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="bedroom1" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/bedroom1.png" alt="bedroom1" width="96">
+                        </span>
+                        <span class="pill scene-pill" data-value="bedroom3" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/bedroom3.png" alt="bedroom3" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="bathroom1" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/bathroom1.png" alt="bathroom1" width="96">
+                        </span>
+                        <span class="pill scene-pill" data-value="computer" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/computer.png" alt="computer" width="96">
+                        </span>
+                        <span class="pill scene-pill" data-value="piano" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/piano.png" alt="piano" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="dragon" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/dragon.png" alt="dragon" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="sd_babyroom" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/sd_babyroom.png" alt="sd_babyroom" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="tunnel" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/tunnel.png" alt="tunnel" width="96">
+                        </span>
+                        <span class="pill scene-pill" data-value="sd_garage" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/sd_garage.png" alt="sd_garage" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="conference" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/conference.png" alt="conference" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="car" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/car.png" alt="car" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="wukong" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/wukong.png" alt="wukong" width="86">
+                        </span>
+                        <span class="pill scene-pill" data-value="bear" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/bear.png" alt="bear" width="72">
+                        </span>
+                        <span class="pill scene-pill" data-value="ocean" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/ocean.png" alt="ocean" width="96">
+                        </span>
+                        <span class="pill scene-pill" data-value="bust" onclick="selectiframe(this)">
+                            <img class="thumbnail-img" src="visual/thumbnails/bust.png" alt="bust" width="72">
+                        </span>
+                    </div>
+
+                    <script>
+                        activeScenePill = document.querySelector('.scene-pill.active-pill');
+                    </script>
+
+                </div>
+            </div>
+    </div>
+
+</body>
+</html>
